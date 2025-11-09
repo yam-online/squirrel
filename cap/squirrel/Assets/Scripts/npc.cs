@@ -5,16 +5,25 @@ using UnityEngine;
 public class npc : MonoBehaviour
 {
     public Transform squirrel;
-    public float speed = 1.0f;
-    
-    void Update() {
-        transform.LookAt(squirrel);
+    public float speed = 0.5f;
+    Rigidbody2D npcRB;
 
-        float dist = Vector3.Distance(transform.position, squirrel.position);
-        if(dist > 1.0f) {
-            // transform.position = Vector3.MoveTowards(transform.position, squirrel.position, speed);
-            			transform.position += transform.forward * speed * Time.deltaTime;
-        }
+    void Start() {
+        npcRB = GetComponent<Rigidbody2D>();
+    }
+    
+    void FixedUpdate() {
+        Vector2 pos = Vector2.MoveTowards(transform.position, squirrel.position, speed * Time.deltaTime);
+
+        npcRB.MovePosition(pos);
     }
 
+    // if there is a collision --> game over!!!
+    void OnTriggerEnter2D(Collider2D other) {
+        SquirrelController squirrelGO = other.gameObject.GetComponent<SquirrelController>();
+        if(squirrelGO != null) {
+            squirrelGO.ChangeHealth(-10);
+            // game over not implemented yet
+        }
+    }
 }
