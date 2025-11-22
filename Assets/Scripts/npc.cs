@@ -6,6 +6,7 @@ public class npc : MonoBehaviour
 {
     public Transform squirrel;
     public float speed = 0.5f;
+    public float followRadius = 10f;
     Rigidbody2D npcRB;
 
     void Start() {
@@ -13,9 +14,13 @@ public class npc : MonoBehaviour
     }
     
     void FixedUpdate() {
-        Vector2 pos = Vector2.MoveTowards(transform.position, squirrel.position, speed * Time.deltaTime);
+        float distance = Vector2.Distance(transform.position, squirrel.position);
 
-        npcRB.MovePosition(pos);
+        if(distance <= followRadius) {
+            Vector2 pos = Vector2.MoveTowards(transform.position, squirrel.position, speed * Time.deltaTime);
+
+            npcRB.MovePosition(pos);
+        }
     }
 
     // if there is a collision --> game over!!!
