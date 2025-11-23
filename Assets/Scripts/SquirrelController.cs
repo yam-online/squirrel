@@ -19,8 +19,8 @@ public class SquirrelController : MonoBehaviour
     }
 
     public GameObject acornProjectilePrefab;
-    // public GameObject strawberryProjectilePrefab;
-    // public GameObject burgerProjectilePrefab;
+    public GameObject strawberryProjectilePrefab;
+    public GameObject burgerProjectilePrefab;
     private List<GameObject> collected = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -47,9 +47,13 @@ public class SquirrelController : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.F)) {
-            Throw();
+        if(Mouse.current.leftButton.wasPressedThisFrame) {
+            ThrowTowardsMouse();
         }
+
+        // if(Input.GetKeyDown(KeyCode.F)) {
+        //     Throw();
+        // }
     }
 
     void FixedUpdate() {
@@ -66,35 +70,17 @@ public class SquirrelController : MonoBehaviour
         Debug.Log((float)currentHealth / (float)maxHealth);
     }
 
-    public void CollectFood(GameObject projectilePrefab) {
-
-    if (projectilePrefab == null) {
-        Debug.LogError("🚨 ERROR: projectilePrefab is NULL when collecting!");
-    }
-
-    collected.Add(projectilePrefab);
-
-    Debug.Log("🧺 CURRENT COLLECTED LIST:");
-    for (int i = 0; i < collected.Count; i++) {
-        if (collected[i] == null) {
-            Debug.LogError($"❌ Slot {i} = NULL (broken reference)");
-        } else {
-            Debug.Log($"✔ Slot {i}: {collected[i].name}");
-        }
-    }
-    }
-
     public void CollectFood(FoodType type) {
         switch(type) {
             case FoodType.Acorn:
                 collected.Add(acornProjectilePrefab);
                 break;
-            // case FoodType.Strawberry:
-            //     collected.Add(strawberryProjectilePrefab);
-            //     break;
-            // case FoodType.Burger:
-            //     collected.Add(burgerProjectilePrefab);
-            //     break;
+            case FoodType.Strawberry:
+                collected.Add(strawberryProjectilePrefab);
+                break;
+            case FoodType.Burger:
+                collected.Add(burgerProjectilePrefab);
+                break;
         }
 
         for (int i = 0; i < collected.Count; i++) {
@@ -127,4 +113,24 @@ public class SquirrelController : MonoBehaviour
 
         projScript.Launch(direction);
     }
+
+    void ThrowTowardsMouse() {
+        if(collected.Count == 0) {
+            return;
+        }
+
+        GameObject prefab = collected[0];
+        collected.RemoveAt(0);
+
+        GameObject projectile = Instantiate(prefab, transform.position, Quaternion.identity);
+        Projectile projScript = projectile.GetComponent<Projectile>();
+
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mouseWorld.z = 0;
+
+        Vector2 direction = (mouseWorld - transform.position).normalized;
+
+        projScript.Launch(direction);
+    }
+
 }

@@ -5,10 +5,11 @@ using UnityEngine;
 public class Burger : MonoBehaviour
 {
     private SquirrelController sc;
+    public FoodType type;
 
     void Update() {
         if(sc != null && Input.GetKeyDown(KeyCode.Space)) {
-            // sc.CollectFood(gameObject);
+            sc.CollectFood(type);
             sc.ChangeHealth(3);
             Destroy(gameObject);
         }
