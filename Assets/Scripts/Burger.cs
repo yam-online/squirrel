@@ -8,6 +8,7 @@ public class Burger : MonoBehaviour
 
     void Update() {
         if(sc != null && Input.GetKeyDown(KeyCode.Space)) {
+            // sc.CollectFood(gameObject);
             sc.ChangeHealth(3);
             Destroy(gameObject);
         }

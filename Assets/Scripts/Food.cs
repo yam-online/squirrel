@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum FoodType {
+    Acorn,
+    Strawberry,
+    Burger
+}
 
 public class Food : MonoBehaviour
 {
     private SquirrelController sc;
+    public FoodType type;
 
     void Update() {
         if(sc != null && Input.GetKeyDown(KeyCode.Space)) {
+            sc.CollectFood(type);
             sc.ChangeHealth(1);
             Destroy(gameObject);
         }

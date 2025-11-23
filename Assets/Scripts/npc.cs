@@ -6,7 +6,7 @@ public class npc : MonoBehaviour
 {
     public Transform squirrel;
     public float speed = 0.5f;
-    public float followRadius = 10f;
+    public float followRadius = 20f;
     Rigidbody2D npcRB;
 
     void Start() {

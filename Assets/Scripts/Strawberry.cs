@@ -8,6 +8,7 @@ public class Strawberry : MonoBehaviour
 
     void Update() {
         if(sc != null && Input.GetKeyDown(KeyCode.Space)) {
+            // sc.CollectFood(gameObject);
             sc.ChangeHealth(2);
             Destroy(gameObject);
         }
