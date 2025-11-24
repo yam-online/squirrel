@@ -96,30 +96,27 @@ public class SquirrelController : MonoBehaviour
         }
     }
 
-    public void Throw() {
-        // nothing is collected yet
+    public void DecreaseFood() {
         if(collected.Count == 0) {
+            ChangeHealth(-1);
             return;
         }
 
-        // retrieve first item in queue
-        GameObject projectilePrefab = collected[0];
-        // remove it
+        GameObject removedType = collected[0];
+        if(removedType.name.Contains("acorn")) {
+            ChangeHealth(-1);
+        }
+        else if(removedType.name.Contains("strawberry")) {
+            ChangeHealth(-2);
+        }
+        else if(removedType.name.Contains("burger")) {
+            ChangeHealth(-3);
+        }
         collected.RemoveAt(0);
-
-        // instantiate the prefab as a gameobject to be able to see it on screen
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        Projectile projScript = projectile.GetComponent<Projectile>();
-
-        Vector2 direction = Vector2.right;
-        if(GetComponent<Rigidbody2D>().velocity.magnitude > 0)
-            direction = GetComponent<Rigidbody2D>().velocity.normalized;
-
-        projScript.Launch(direction);
     }
 
     void ThrowTowardsMouse() {
-        if(collected.Count == 0) {
+        if(collected.Count == 0 || currentHealth < 0) {
             return;
         }
 
@@ -132,12 +129,15 @@ public class SquirrelController : MonoBehaviour
         // determine foodtype based on prefab
         if(prefab.name.Contains("acorn")) {
             projScript.type = FoodType.Acorn;
+            ChangeHealth(-1);
         }
         else if(prefab.name.Contains("strawberry")) {
             projScript.type = FoodType.Strawberry;
+            ChangeHealth(-2);
         }
         else if(prefab.name.Contains("burger")) {
             projScript.type = FoodType.Burger;
+            ChangeHealth(-3);
         }
 
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());

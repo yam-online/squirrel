@@ -51,7 +51,6 @@ public class npc : MonoBehaviour
 
         if(currentHealth == 0) {
             audioSource.PlayOneShot(deathClip);
-            Debug.Log(deathClip.length);
             Destroy(gameObject, deathClip.length);
         }
     }
