@@ -6,9 +6,11 @@ public class Strawberry : MonoBehaviour
 {
     private SquirrelController sc;
     public FoodType type;
+    public AudioClip collectedClip;
 
     void Update() {
         if(sc != null && Input.GetKeyDown(KeyCode.Space)) {
+            sc.PlaySound(collectedClip);
             sc.CollectFood(type);
             sc.ChangeHealth(2);
             Destroy(gameObject);

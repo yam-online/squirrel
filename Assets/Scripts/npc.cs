@@ -9,8 +9,16 @@ public class npc : MonoBehaviour
     public float followRadius = 20f;
     Rigidbody2D npcRB;
 
+    int currentHealth;
+    public int health {
+        get {
+            return currentHealth;
+        }
+    }
+
     void Start() {
         npcRB = GetComponent<Rigidbody2D>();
+        currentHealth = 5;
     }
     
     void FixedUpdate() {
@@ -29,6 +37,15 @@ public class npc : MonoBehaviour
         if(squirrelGO != null) {
             squirrelGO.ChangeHealth(-10);
             // game over not implemented yet
+        }
+    }
+
+    public void Damage(int amount) {
+        currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0);
+
+        if(currentHealth == 0) {
+            Destroy(gameObject);
         }
     }
 }

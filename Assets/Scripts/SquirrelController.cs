@@ -23,6 +23,8 @@ public class SquirrelController : MonoBehaviour
     public GameObject burgerProjectilePrefab;
     private List<GameObject> collected = new List<GameObject>();
 
+    AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,8 @@ public class SquirrelController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
 
         Health.instance.ResizeHealth((float)currentHealth / (float)maxHealth);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -125,6 +129,17 @@ public class SquirrelController : MonoBehaviour
         GameObject projectile = Instantiate(prefab, transform.position, Quaternion.identity);
         Projectile projScript = projectile.GetComponent<Projectile>();
 
+        // determine foodtype based on prefab
+        if(prefab.name.Contains("acorn")) {
+            projScript.type = FoodType.Acorn;
+        }
+        else if(prefab.name.Contains("strawberry")) {
+            projScript.type = FoodType.Strawberry;
+        }
+        else if(prefab.name.Contains("burger")) {
+            projScript.type = FoodType.Burger;
+        }
+
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         mouseWorld.z = 0;
 
@@ -133,4 +148,7 @@ public class SquirrelController : MonoBehaviour
         projScript.Launch(direction);
     }
 
+    public void PlaySound(AudioClip clip) {
+        audioSource.PlayOneShot(clip);
+    }
 }
