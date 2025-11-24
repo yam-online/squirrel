@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
     // public enum FoodType { Acorn, Strawberry, Burger }
     public FoodType type;
     private int damage;
+    public AudioClip collectedClip;
 
     void Start() {
         switch(type) {
@@ -38,16 +39,13 @@ public class Projectile : MonoBehaviour
         if(rb != null) rb.velocity = direction * speed;
     }
 
-    // void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     // Add logic for hitting something (optional)
-    //     Destroy(gameObject);
-    // }
-
     void OnTriggerEnter2D(Collider2D other) {
         npc target = other.GetComponent<npc>();
         if(target != null) {
             target.Damage(damage);
+            if(target.health > 0) {
+                target.PlaySound(collectedClip);
+            }
             Destroy(gameObject);
         }
     }

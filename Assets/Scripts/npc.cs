@@ -16,9 +16,14 @@ public class npc : MonoBehaviour
         }
     }
 
+    AudioSource audioSource;
+    public AudioClip deathClip;
+
     void Start() {
         npcRB = GetComponent<Rigidbody2D>();
         currentHealth = 5;
+
+        audioSource = GetComponent<AudioSource>();
     }
     
     void FixedUpdate() {
@@ -45,7 +50,13 @@ public class npc : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth, 0);
 
         if(currentHealth == 0) {
-            Destroy(gameObject);
+            audioSource.PlayOneShot(deathClip);
+            Debug.Log(deathClip.length);
+            Destroy(gameObject, deathClip.length);
         }
+    }
+
+    public void PlaySound(AudioClip clip) {
+        audioSource.PlayOneShot(clip);
     }
 }
