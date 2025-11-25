@@ -78,6 +78,7 @@ public class Projectile : MonoBehaviour
             if(count == 5) {
                 squirrel.enabled = false;
                 squirrel.ShowExterminated();
+                Time.timeScale = 0f;
             }
             return;
         }

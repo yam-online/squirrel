@@ -57,6 +57,7 @@ public class npc : MonoBehaviour
             squirrelGO.enabled = false;
             if(gameOverCanvas != null) {
                 gameOverCanvas.gameObject.SetActive(true);
+                Time.timeScale = 0f;
             }
         }
     }
