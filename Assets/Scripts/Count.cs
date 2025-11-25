@@ -10,6 +10,15 @@ public class Count : MonoBehaviour
 
     void Update()
     {
-        humanCount.text = $"{npc.count.ToString()} humans left...";
+        if(npc.count == 1) {
+            humanCount.text = $"{npc.count.ToString()} human left...";
+        }
+        else if(npc.count > 0) {
+            humanCount.text = $"{npc.count.ToString()} humans left...";
+        }
+        else {
+            humanCount.text = "Beware the exterminator...";
+        }
+
     }
 }

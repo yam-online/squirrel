@@ -54,10 +54,6 @@ public class SquirrelController : MonoBehaviour
         if(Mouse.current.leftButton.wasPressedThisFrame) {
             ThrowTowardsMouse();
         }
-
-        // if(Input.GetKeyDown(KeyCode.F)) {
-        //     Throw();
-        // }
     }
 
     void FixedUpdate() {
