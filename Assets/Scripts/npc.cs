@@ -19,6 +19,8 @@ public class npc : MonoBehaviour
     AudioSource audioSource;
     public AudioClip deathClip;
 
+    public static int count = 6;
+
     void Start() {
         npcRB = GetComponent<Rigidbody2D>();
         currentHealth = 5;
@@ -52,6 +54,7 @@ public class npc : MonoBehaviour
         if(currentHealth == 0) {
             audioSource.PlayOneShot(deathClip);
             Destroy(gameObject, deathClip.length);
+            npc.count--;
         }
     }
 

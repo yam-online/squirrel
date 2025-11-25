@@ -12,6 +12,8 @@ public class Projectile : MonoBehaviour
     private int damage;
     public AudioClip collectedClip;
 
+    public GameObject explodePrefab;
+
     void Start() {
         switch(type) {
             case FoodType.Acorn:
@@ -42,6 +44,11 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         npc target = other.GetComponent<npc>();
         if(target != null) {
+            if(explodePrefab != null) {
+                GameObject explosion = Instantiate(explodePrefab, target.transform.position, Quaternion.identity);
+                Destroy(explosion, 1.0f);
+            }
+
             target.Damage(damage);
             if(target.health > 0) {
                 target.PlaySound(collectedClip);
