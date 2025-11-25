@@ -25,6 +25,9 @@ public class SquirrelController : MonoBehaviour
 
     AudioSource audioSource;
 
+    public Canvas exterminatedCanvas;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -146,5 +149,12 @@ public class SquirrelController : MonoBehaviour
 
     public void PlaySound(AudioClip clip) {
         audioSource.PlayOneShot(clip);
+    }
+
+    public void ShowExterminated() {
+        if(exterminatedCanvas != null) {
+            exterminatedCanvas.gameObject.SetActive(true);
+        }
+        else {Debug.Log("cant find it");}
     }
 }

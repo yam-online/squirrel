@@ -17,6 +17,8 @@ public class Projectile : MonoBehaviour
     public float lifetime = 10f;
     private float timer = 0f;
 
+    private static int count = 0;
+
     void Start() {
         switch(type) {
             case FoodType.Acorn:
@@ -68,8 +70,15 @@ public class Projectile : MonoBehaviour
 
         SquirrelController squirrel = other.GetComponent<SquirrelController>();
         if(squirrel != null) {
+            count++;
             squirrel.DecreaseFood();
             Destroy(gameObject);
+
+            // if touched squirrel 5 times -> game over
+            if(count == 5) {
+                squirrel.enabled = false;
+                squirrel.ShowExterminated();
+            }
             return;
         }
     }

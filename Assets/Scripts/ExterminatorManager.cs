@@ -16,7 +16,7 @@ public class ExterminatorManager : MonoBehaviour
 
     void Update()
     {
-        if(npc.count == 6 && !spawned) {
+        if(npc.count == 5 && !spawned) {
             spawned = true;
             StartCoroutine(SpawnExterminator());
         }

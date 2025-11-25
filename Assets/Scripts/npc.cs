@@ -19,7 +19,11 @@ public class npc : MonoBehaviour
     AudioSource audioSource;
     public AudioClip deathClip;
 
-    public static int count = 6;
+    public static int count = 5;
+
+    private bool isDead = false;
+
+    public Canvas gameOverCanvas;
 
     void Start() {
         npcRB = GetComponent<Rigidbody2D>();
@@ -29,6 +33,10 @@ public class npc : MonoBehaviour
     }
     
     void FixedUpdate() {
+        if(isDead) {
+            return;
+        }
+
         float distance = Vector2.Distance(transform.position, squirrel.position);
 
         if(distance <= followRadius) {
@@ -40,18 +48,28 @@ public class npc : MonoBehaviour
 
     // if there is a collision --> game over!!!
     void OnTriggerEnter2D(Collider2D other) {
+        if(isDead) {
+            return;
+        }
         SquirrelController squirrelGO = other.gameObject.GetComponent<SquirrelController>();
         if(squirrelGO != null) {
-            squirrelGO.ChangeHealth(-10);
-            // game over not implemented yet
+            // game over!
+            squirrelGO.enabled = false;
+            if(gameOverCanvas != null) {
+                gameOverCanvas.gameObject.SetActive(true);
+            }
         }
     }
 
     public void Damage(int amount) {
+        if(isDead) {
+            return;
+        }
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
 
         if(currentHealth == 0) {
+            isDead = true;
             audioSource.PlayOneShot(deathClip);
             Destroy(gameObject, deathClip.length);
             npc.count--;
