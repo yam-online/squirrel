@@ -14,6 +14,9 @@ public class Projectile : MonoBehaviour
 
     public GameObject explodePrefab;
 
+    public float lifetime = 10f;
+    private float timer = 0f;
+
     void Start() {
         switch(type) {
             case FoodType.Acorn:
@@ -29,7 +32,13 @@ public class Projectile : MonoBehaviour
     }
 
     void Update() {
-        if(transform.position.magnitude > 100.0f) {
+        // time based destroy
+        timer += Time.deltaTime;
+        if(timer >= lifetime) {
+            Destroy(gameObject);
+        }
+        // distance based destroy
+        else if(transform.position.magnitude > 100.0f) {
            Destroy(gameObject);
         }
     }
@@ -54,6 +63,14 @@ public class Projectile : MonoBehaviour
                 target.PlaySound(collectedClip);
             }
             Destroy(gameObject);
+            return;
+        }
+
+        SquirrelController squirrel = other.GetComponent<SquirrelController>();
+        if(squirrel != null) {
+            squirrel.DecreaseFood();
+            Destroy(gameObject);
+            return;
         }
     }
 }

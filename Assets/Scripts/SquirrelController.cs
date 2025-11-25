@@ -94,7 +94,7 @@ public class SquirrelController : MonoBehaviour
 
     public void DecreaseFood() {
         if(collected.Count == 0) {
-            ChangeHealth(-1);
+            // ChangeHealth(-1);
             return;
         }
 
