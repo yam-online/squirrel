@@ -15,7 +15,7 @@ public class Exterminator : MonoBehaviour
     public AudioClip deathClip;
 
     public Canvas gameOverCanvas;
-
+    public Canvas exterminatedCanvas;
     void Start() {
         audioSource = GetComponent<AudioSource>();
     }
@@ -36,5 +36,17 @@ public class Exterminator : MonoBehaviour
     
     public void PlaySound(AudioClip clip) {
         audioSource.PlayOneShot(clip);
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        SquirrelController squirrelGO = other.gameObject.GetComponent<SquirrelController>();
+        if(squirrelGO != null) {
+            // game over!
+            squirrelGO.enabled = false;
+            if(exterminatedCanvas != null) {
+                exterminatedCanvas.gameObject.SetActive(true);
+                Time.timeScale = 0f;
+            }
+        }
     }
 }

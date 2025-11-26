@@ -7,6 +7,7 @@ using TMPro;
 public class Count : MonoBehaviour
 {
     public TMP_Text humanCount;
+    public TMP_Text livesCount;
 
     void Update()
     {
@@ -18,7 +19,14 @@ public class Count : MonoBehaviour
         }
         else {
             humanCount.text = "Beware the exterminator...";
-        }
+            int flippedCount = 5 - Projectile.count;
+            if(flippedCount == 1) {
+                livesCount.text = $"you have {flippedCount.ToString()} life left!";
+            }
+            else {
+                livesCount.text = $"you have {flippedCount.ToString()} lives left!";
 
+            }        
+        }
     }
 }
