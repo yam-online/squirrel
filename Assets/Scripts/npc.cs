@@ -19,7 +19,7 @@ public class npc : MonoBehaviour
     AudioSource audioSource;
     public AudioClip deathClip;
 
-    public static int count = 5;
+    public static int count = 1;
 
     private bool isDead = false;
 

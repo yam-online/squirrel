@@ -7,7 +7,7 @@ public class ExterminatorManager : MonoBehaviour
     public GameObject exterminator;
     public Transform squirrel;
     public float speed = 0.9f;
-    private bool spawned = false;
+    public bool spawned = false;
 
     public GameObject purpleGas;
     public float radius = 15f;
@@ -16,7 +16,7 @@ public class ExterminatorManager : MonoBehaviour
 
     void Update()
     {
-        if(npc.count == 5 && !spawned) {
+        if(npc.count == 0 && !spawned) {
             spawned = true;
             StartCoroutine(SpawnExterminator());
         }

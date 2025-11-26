@@ -9,7 +9,7 @@ public class MapGenerator : MonoBehaviour
     public int count = 5;
     public float distance = 1f;
 
-    private List<GameObject> activeObjects = new List<GameObject>();
+    public List<GameObject> activeObjects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +64,7 @@ public class MapGenerator : MonoBehaviour
             SpawnObject(prefab);
         }
     }
-    
+
     private void OnDisable()
     {
         foreach(var obj in activeObjects) {

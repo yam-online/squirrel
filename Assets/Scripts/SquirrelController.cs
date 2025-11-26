@@ -11,7 +11,7 @@ public class SquirrelController : MonoBehaviour
     public float speed = 3.0f;
 
     public int maxHealth;
-    int currentHealth;
+    public int currentHealth;
     public int health {
         get {
             return currentHealth;
@@ -122,7 +122,13 @@ public class SquirrelController : MonoBehaviour
         GameObject prefab = collected[0];
         collected.RemoveAt(0);
 
-        GameObject projectile = Instantiate(prefab, transform.position, Quaternion.identity);
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mouseWorld.z = 0;
+        Vector2 direction = (mouseWorld - transform.position).normalized;
+
+        Vector2 spawnOffset = direction * 0.5f;
+        Vector2 spawnPos = (Vector2)transform.position + spawnOffset;
+        GameObject projectile = Instantiate(prefab, spawnPos, Quaternion.identity);
         Projectile projScript = projectile.GetComponent<Projectile>();
 
         // determine foodtype based on prefab
@@ -138,11 +144,6 @@ public class SquirrelController : MonoBehaviour
             projScript.type = FoodType.Burger;
             ChangeHealth(-3);
         }
-
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        mouseWorld.z = 0;
-
-        Vector2 direction = (mouseWorld - transform.position).normalized;
 
         projScript.Launch(direction);
     }

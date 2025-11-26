@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
     public float lifetime = 10f;
     private float timer = 0f;
 
-    private static int count = 0;
+    public static int count = 0;
 
     void Start() {
         switch(type) {
@@ -68,8 +68,17 @@ public class Projectile : MonoBehaviour
             return;
         }
 
+        Exterminator ext = other.GetComponent<Exterminator>();
+        if(ext != null && !gameObject.name.Contains("purple")) {
+            ext.Damage(damage);
+            if(ext.health > 0) {
+                ext.PlaySound(collectedClip);
+            }
+            Destroy(gameObject);
+        }
+
         SquirrelController squirrel = other.GetComponent<SquirrelController>();
-        if(squirrel != null) {
+        if(squirrel != null && gameObject.name.Contains("purple")) {
             count++;
             squirrel.DecreaseFood();
             Destroy(gameObject);
