@@ -82,6 +82,12 @@ public class Projectile : MonoBehaviour
             count++;
             squirrel.DecreaseFood();
             Destroy(gameObject);
+            squirrel.PlaySound(collectedClip);
+            if(explodePrefab != null) {
+                Debug.Log("oogoga");
+                GameObject explosion = Instantiate(explodePrefab, squirrel.transform.position, Quaternion.identity);
+                Destroy(explosion, 1.0f);
+            }
 
             // if touched squirrel 5 times -> game over
             if(count == 5) {
