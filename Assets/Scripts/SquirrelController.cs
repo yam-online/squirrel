@@ -149,7 +149,7 @@ public class SquirrelController : MonoBehaviour
     }
 
     public void PlaySound(AudioClip clip) {
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(clip, 6.0f);
     }
 
     public void ShowExterminated() {

@@ -71,13 +71,13 @@ public class npc : MonoBehaviour
 
         if(currentHealth == 0) {
             isDead = true;
-            audioSource.PlayOneShot(deathClip);
+            audioSource.PlayOneShot(deathClip, 3.0f);
             Destroy(gameObject, deathClip.length);
             npc.count--;
         }
     }
 
     public void PlaySound(AudioClip clip) {
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(clip, 3.0f);
     }
 }
