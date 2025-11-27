@@ -5,14 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-    // public GameState gs;
+    public Canvas rulesCanvas;
 
     public void PlayGame() {
         Time.timeScale = 1f;
         SceneManager.LoadSceneAsync("MainScene");
-        // if(gs != null) {
-        //     gs.ResetGame();
-        // }
     }
 
     public void QuitGame() {
@@ -21,6 +18,18 @@ public class MainMenuScript : MonoBehaviour
 
     public void LoadMainMenu() {
         SceneManager.LoadSceneAsync("MainMenu");
+    }
+
+    public void ShowRules() {
+        if(rulesCanvas != null) {
+            rulesCanvas.gameObject.SetActive(true);
+        }
+    }
+
+    public void Back() {
+        if(rulesCanvas != null) {
+            rulesCanvas.gameObject.SetActive(false);
+        }
     }
 
 }

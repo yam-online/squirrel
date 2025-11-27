@@ -19,7 +19,9 @@ public class npc : MonoBehaviour
     AudioSource audioSource;
     public AudioClip deathClip;
 
-    public static int count = 1;
+    public AudioClip loseClip;
+
+    public static int count = 5;
 
     private bool isDead = false;
 
@@ -27,7 +29,7 @@ public class npc : MonoBehaviour
 
     void Start() {
         npcRB = GetComponent<Rigidbody2D>();
-        currentHealth = 5;
+        currentHealth = 10;
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -44,6 +46,14 @@ public class npc : MonoBehaviour
 
             npcRB.MovePosition(pos);
         }
+
+        if(squirrel.position.x < transform.position.x) {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+
     }
 
     // if there is a collision --> game over!!!
@@ -55,6 +65,7 @@ public class npc : MonoBehaviour
         if(squirrelGO != null) {
             // game over!
             squirrelGO.enabled = false;
+            audioSource.PlayOneShot(loseClip, 0.7f);
             if(gameOverCanvas != null) {
                 gameOverCanvas.gameObject.SetActive(true);
                 Time.timeScale = 0f;

@@ -85,14 +85,6 @@ public class SquirrelController : MonoBehaviour
                 collected.Add(burgerProjectilePrefab);
                 break;
         }
-
-        for (int i = 0; i < collected.Count; i++) {
-        if (collected[i] == null) {
-            Debug.LogError($"❌ Slot {i} = NULL (broken reference)");
-        } else {
-            Debug.Log($"✔ Slot {i}: {collected[i].name}");
-        }
-        }
     }
 
     public void DecreaseFood() {

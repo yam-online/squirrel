@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Exterminator : MonoBehaviour
 {
-    public int currentHealth = 5;
+    public int currentHealth = 15;
     public int health {
         get {
             return currentHealth;
@@ -13,6 +13,8 @@ public class Exterminator : MonoBehaviour
 
     AudioSource audioSource;
     public AudioClip deathClip;
+
+    public AudioClip loseClip;
 
     public Canvas gameOverCanvas;
     public Canvas exterminatedCanvas;
@@ -31,6 +33,7 @@ public class Exterminator : MonoBehaviour
     void Start() {
         audioSource = GetComponent<AudioSource>();
         speechBubbleCanvas.gameObject.SetActive(false);
+        currentHealth = 15;
     }
 
     public void Damage(int amount) {
@@ -58,6 +61,7 @@ public class Exterminator : MonoBehaviour
         if(squirrelGO != null) {
             // game over!
             squirrelGO.enabled = false;
+            audioSource.PlayOneShot(loseClip, 0.7f);
             if(exterminatedCanvas != null) {
                 exterminatedCanvas.gameObject.SetActive(true);
                 Time.timeScale = 0f;

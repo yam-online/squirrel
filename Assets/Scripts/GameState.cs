@@ -16,7 +16,7 @@ public class GameState : MonoBehaviour
         ResetGame();
     }
     public void ResetGame() {
-        npc.count = 1;
+        npc.count = 5;
         Projectile.count = 0;
 
         // squirrel
@@ -41,7 +41,7 @@ public class GameState : MonoBehaviour
             exterminator.transform.position = Vector2.zero;
             var ext = exterminator.GetComponent<Exterminator>();
             if(ext != null) {
-                ext.currentHealth = 5;
+                ext.currentHealth = 15;
                 if(ext.gameOverCanvas != null) {
                     ext.gameOverCanvas.gameObject.SetActive(false);
                 }
