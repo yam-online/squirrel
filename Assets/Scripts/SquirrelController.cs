@@ -27,6 +27,9 @@ public class SquirrelController : MonoBehaviour
 
     public Canvas exterminatedCanvas;
 
+    public float coolDown = 0.6f;
+    private float timer = 0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -107,9 +110,13 @@ public class SquirrelController : MonoBehaviour
     }
 
     void ThrowTowardsMouse() {
+        if(Time.time < timer) {
+            return;
+        }
         if(collected.Count == 0 || currentHealth < 0) {
             return;
         }
+        timer = Time.time + coolDown;
 
         GameObject prefab = collected[0];
         collected.RemoveAt(0);
